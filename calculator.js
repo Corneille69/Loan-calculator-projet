@@ -1,6 +1,14 @@
 let currentCalculation = null;
 let loanChart = null;
 
+// ✅ Fonction pour formater les montants en FCFA
+function formatCurrency(value) {
+    return value.toLocaleString('fr-FR', {
+        style: 'currency',
+        currency: 'XOF'
+    });
+}
+
 // Fonction principale de calcul
 function calculateLoan() {
     const amount = parseFloat(document.getElementById('loanAmount').value);
@@ -32,6 +40,7 @@ function calculateLoan() {
 
     displayResults(monthlyPayment, totalPayment, totalInterest);
     createChart(amount, totalInterest);
+    document.getElementById("monthlyPayment").innerText = formatCurrency(monthlyPayment);
 
     if (currentUser) {
         document.getElementById('saveLoanBtn').style.display = 'block';
@@ -42,7 +51,7 @@ function validateInputs(amount, rate, term) {
     if (isNaN(amount) || amount <= 0) return alert('Montant invalide');
     if (isNaN(rate) || rate < 0 || rate > 20) return alert('Taux invalide');
     if (isNaN(term) || term <= 0 || term > 40) return alert('Durée invalide');
-    if (amount > 1000000) return alert('Montant max 1 000 000 €');
+    if (amount > 1000000) return alert('Montant max 1 000 000 FCFA');
     return true;
 }
 
@@ -63,7 +72,7 @@ function createChart(principal, interest) {
     loanChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
-            labels: ['Capital', 'Intérêts'],
+            labels: ['Capital', 'Interest'],
             datasets: [{
                 data: [principal, interest],
                 backgroundColor: ['#06d6a0', '#6366f1'],
@@ -92,6 +101,7 @@ function createChart(principal, interest) {
             cutout: '60%'
         }
     });
+
     document.getElementById('loanChart').style.height = '300px';
 }
 
@@ -129,9 +139,9 @@ function resetCalculator() {
     document.getElementById('chartContainer').style.display = "none";
     document.getElementById('saveLoanBtn').style.display = "none";
 
-    document.getElementById('monthlyPayment').innerText = "0 €";
-    document.getElementById('totalPayment').innerText = "0 €";
-    document.getElementById('totalInterest').innerText = "0 €";
+    document.getElementById('monthlyPayment').innerText = "0 FCFA";
+    document.getElementById('totalPayment').innerText = "0 FCFA";
+    document.getElementById('totalInterest').innerText = "0 FCFA";
 
     if (loanChart) loanChart.destroy();
     loanChart = null;
@@ -141,15 +151,7 @@ function generateId() {
     return Date.now().toString(36) + Math.random().toString(36).substring(2);
 }
 
-function formatCurrency(value) {
-    return new Intl.NumberFormat('fr-FR', {
-        style: 'currency',
-        currency: 'EUR'
-    }).format(value);
-}
-
 function scrollToCalculator() {
     const el = document.getElementById("calculator");
     if (el) el.scrollIntoView({ behavior: "smooth" });
 }
-
