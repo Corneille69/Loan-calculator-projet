@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome to ZenLoan</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      height: 100%;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+      overflow: hidden;
+    }
+
+    .splash-container {
+      text-align: center;
+      animation: fadeIn 1.2s ease-in-out forwards;
+    }
+
+    .logo {
+      font-size: 3.5rem;
+      color: #00ffcc;
+      animation: float 2.5s infinite ease-in-out;
+    }
+
+    .title {
+      font-size: 2.2rem;
+      margin-top: 1rem;
+      opacity: 0;
+      animation: fadeInText 1.5s forwards;
+      animation-delay: 1s;
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      margin-top: 0.5rem;
+      color: #ccc;
+      opacity: 0;
+      animation: fadeInText 1.5s forwards;
+      animation-delay: 2s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+
+    @keyframes fadeInText {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="splash-container">
+    <div class="logo"><i class="fas fa-coins"></i></div>
+    <div class="title">Welcome to <strong>ZenLoan</strong></div>
+    <div class="subtitle">Simplify your loan management with elegance</div>
+  </div>
+
+  <script>
+    // Redirect after 4 seconds
+    setTimeout(() => {
+      window.location.href = "splashe.html"; // make sure index.html is in the same location
+    }, 9000);
+  </script>
+</body>
+</html>

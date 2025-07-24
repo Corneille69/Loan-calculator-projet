@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZenLoan - Manage your loans with peace of mind</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <nav class="nav">
+            <div class="nav-brand">
+                <i class="fas fa-coins"></i>
+                <span>ZenLoan</span>
+            </div>
+            <div class="nav-links">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#calculator" class="nav-link">Calculator</a>
+                <a href="#dashboard" class="nav-link" id="dashboardLink" style="display: none;">My Loans</a>
+                <button class="btn-auth" id="authBtn">Sign in</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Landing Page -->
+    <section class="landing" id="home">
+        <!-- Hero Section -->
+        <div class="hero">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">
+                        Manage your loans with 
+                        <span class="gradient-text">peace of mind</span>
+                    </h1>
+                    <p class="hero-subtitle">
+                        Smart calculator & interactive tracking for all your financing projects
+                    </p>
+                   <button class="btn-primary" onclick="scrollToCalculator()">
+                        <i class="fas fa-calculator"></i>
+                        Start for free
+                    </button>
+
+                </div>
+                <div class="hero-image">
+                    <img src="https://images.unsplash.com/photo-1577915207354-8f266a3fc016?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Nzh8MHwxfHNlYXJjaHwxfHxiYW5raW5nfGVufDB8fHxibHVlfDE3NTI5Njc5MzB8MA&ixlib=rb-4.1.0&q=85" alt="Modern finance">
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="features">
+            <h2 class="section-title">Why choose ZenLoan?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h3>Fast calculator</h3>
+                    <p>Instantly get your monthly payment amount with interactive charts</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <h3>Saved history</h3>
+                    <p>Find all your calculations and track your repayments progress</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Responsive interface</h3>
+                    <p>Access your loans from any device, anywhere, anytime</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <h3>Interactive visualizations</h3>
+                    <p>Dynamic charts to better understand your repayments breakdown</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="cta-section">
+            <h2>Your financial peace starts here.</h2>
+            <button class="btn-primary large" onclick="showAuth()">
+                <i class="fas fa-user-plus"></i>
+                Create my ZenLoan account
+            </button>
+        </div>
+    </section>
+
+    <!-- Loan Calculator Section -->
+    <section class="calculator-section" id="calculator">
+        <div class="container">
+            <h2 class="section-title">Loan Calculator</h2>
+            <div class="calculator-container">
+                <div class="calculator-form">
+                    <div class="form-group">
+                        <label for="loanAmount">Loan amount (€)</label>
+                        <input type="number" id="loanAmount" placeholder="Ex: 200000" min="1000" max="1000000">
+                    </div>
+                    <div class="form-group">
+                        <label for="interestRate">Annual interest rate (%)</label>
+                        <input type="number" id="interestRate" placeholder="Ex: 3.5" min="0.1" max="20" step="0.1">
+                    </div>
+                    <div class="form-group">
+                        <label for="loanTerm">Term (years)</label>
+                        <input type="number" id="loanTerm" placeholder="Ex: 20" min="1" max="40">
+                    </div>
+                    <button class="btn-calculate" onclick="calculateLoan()">
+                        
+                        <i class="fas fa-calculator"></i>
+                        Calculate
+                    </button>
+                    <button class="btn-reset" onclick="resetCalculator()">
+                        <i class="fas fa-eraser"></i>
+                        Clear
+                    </button>
+
+                    <button class="btn-save" id="saveLoanBtn" onclick="saveLoan()" style="display: none;">
+                        <i class="fas fa-save"></i>
+                        Save this loan
+                    </button>
+                </div>
+                <div class="calculator-results">
+                    <div class="result-card" id="resultsCard" style="display: none;">
+                        <h3>Calculation results</h3>
+                        <div class="result-item">
+                            <span>Monthly payment</span>
+                            <strong id="monthlyPayment">0 €</strong>
+                        </div>
+                        <div class="result-item">
+                            <span>Total repaid</span>
+                            <strong id="totalPayment">0 €</strong>
+                        </div>
+                        <div class="result-item">
+                            <span>Total interest</span>
+                            <strong id="totalInterest">0 €</strong>
+                        </div>
+                    </div>
+                    <div class="chart-container" id="chartContainer" style="display: none;">
+                        <canvas id="loanChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Section -->
+    <section class="dashboard" id="dashboard" style="display: none;">
+        <div class="container">
+            <div class="dashboard-header">
+                <h2>My Loans</h2>
+                <span class="user-info" id="userInfo"></span>
+            </div>
+            <div class="loans-grid" id="loansGrid">
+                <!-- Loans will be displayed here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Auth Modal -->
+    <div class="modal" id="authModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeAuth()">&times;</span>
+            <div class="auth-container">
+                <div class="auth-tabs">
+                    <button class="auth-tab active" onclick="showLogin()">Sign in</button>
+                    <button class="auth-tab" onclick="showRegister()">Sign up</button>
+                </div>
+
+
+               <form class="auth-form" id="loginForm" onsubmit="event.preventDefault(); login();">
+                    <h3>Sign in</h3>
+                    <div class="form-group">
+                        
+                        <input type="email" id="loginEmail" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="loginPassword" placeholder="Password" required>
+                    </div>
+                    <button class="btn-primary" type="submit">Sign in</button>
+                </form>
+
+                <form class="auth-form" id="registerForm" style="display: none;" onsubmit="event.preventDefault(); register();">
+                    <h3>Create an account</h3>
+                    <div class="form-group">
+                        <input type="text" id="registerName" placeholder="Full name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="registerEmail" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="registerPassword" placeholder="Password" required>
+                    </div>
+                    <button class="btn-primary" type="submit">Create account</button>
+
+                    <button class="btn-save" id="saveLoanBtn" onclick="saveLoan()" style="display: none;">
+                        <i class="fas fa-save"></i>
+                        Save this loan
+                    </button>
+
+
+                </form>
+
+
+
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="footer-brand">
+                    <i class="fas fa-coins"></i>
+                    <span>ZenLoan</span>
+                </div>
+                <p>Your partner for a serene loan management</p>
+            </div>
+            <div class="footer-section">
+                <h4>Useful links</h4>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div class="footer-section">
+                <h4>Social networks</h4>
+                <div class="social-links">
+                    <a href="http://www.facebook.com"><i class="fab fa-facebook"></i></a>
+                    <a href="http://www.twitter.com"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 ZenLoan. All rights reserved.</p>
+        </div>
+    </footer>
+
+
+    <script src="auth.js"></script>
+    <script src="app.js"></script>
+    <script src="calculator.js"></script>
+</body>
+</html>
